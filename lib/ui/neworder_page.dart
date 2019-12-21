@@ -26,6 +26,7 @@ class _NewOrderPageState extends State<NewOrderPage> {
   @override
   void initState() {
     super.initState();
+    blocNewOrder.init();
     _controller[0].addListener(() => blocNewOrder.changeClientNameFrom(_controller[0].text));
     _controller[1].addListener(() => blocNewOrder.changeClientContactFrom(_controller[1].text));
     _controller[2].addListener(() => blocNewOrder.changeClientPhoneFrom(_controller[2].text));
@@ -38,7 +39,6 @@ class _NewOrderPageState extends State<NewOrderPage> {
     _controller[9].addListener(() => blocNewOrder.changeAppraisedValue(_controller[9].text));
     _controller[10].addListener(() => blocNewOrder.changeCodAmount(_controller[10].text));
     _controller[11].addListener(() => blocNewOrder.changeComment(_controller[11].text));
-    blocNewOrder.initCalculation();
   }
 
   @override
@@ -254,11 +254,15 @@ class _NewOrderPageState extends State<NewOrderPage> {
                         StreamBuilder(
                           stream: blocNewOrder.calculationResponse.stream,
                           builder: (context, AsyncSnapshot<CalculationResponse> calculationResponse){
-                            if(calculationResponse.hasData && calculationResponse.data.result != null){
-                              if(calculationResponse.data.result == -1) return SizedBox.fromSize(size: Size.square(14.0), child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(AppColor.blue)));
-                              return Text('${calculationResponse.data.result} руб', style: AppTextStyle.textBig);
+                            if(calculationResponse.hasData && calculationResponse.data.calcResult != 0){
+                              if(calculationResponse.data.calcResult == -1) return Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: SizedBox.fromSize(
+                                  size: Size.square(14.0),
+                                  child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(AppColor.blue))),
+                              );
+                              return Text('${calculationResponse.data.costDelivery} руб', style: AppTextStyle.textBig);
                             }
-                            if(calculationResponse.hasError) return Icon(Icons.cancel, color: Colors.redAccent, size: 20.0);
                             return Text('0 руб', style: AppTextStyle.textBig);
                           },
                         ),
@@ -280,7 +284,7 @@ class _NewOrderPageState extends State<NewOrderPage> {
                         GestureDetector(
                           onTap: () => blocNewOrder.sendRequest(),
                           child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 12.0),
+                            padding: EdgeInsets.symmetric(vertical: 22.0, horizontal: 12.0),
                             child: Text(
                               'Отправить',
                               style: AppTextStyle.textBigBold,
@@ -289,7 +293,29 @@ class _NewOrderPageState extends State<NewOrderPage> {
                         )
                       ],
                     ),
-                    SizedBox(height: addHeight + 16.0),
+                    StreamBuilder(
+                      stream: blocNewOrder.calculationResponse.stream,
+                      builder: (context, AsyncSnapshot<CalculationResponse> calcResp){
+                        if(calcResp.hasData && calcResp.data.message!=null && calcResp.data.message != '' && calcResp.data.message != 'Не все данные отправлены'){
+                          return Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: AppColor.blue,
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0))
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 4.0),
+                              child: Text(
+                                '${calcResp.data.message}',
+                                style: AppTextStyle.optionsWhite,
+                              ),
+                            ),
+                          );
+                        }
+                        return Container();
+                      },
+                    ),
+                    SizedBox(height: addHeight),
                   ],
                 ),
               ),

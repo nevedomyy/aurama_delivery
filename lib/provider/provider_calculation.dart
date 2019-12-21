@@ -9,7 +9,7 @@ class ProviderCalculation {
 
   Future<CalculationResponse> getCalculation(Calculation calculation) async{
     try {
-      var response = await http.get(_api);
+      var response = await http.get(_api+calculation.toString());
       var responseBody = json.decode(response.body);
       return CalculationResponse.fromJSON(responseBody);
     } catch (e){

@@ -1,25 +1,37 @@
 class CalculationResponse{
-  final double result;
+  final int calcResult;
+  final costDelivery;
+  final String message;
   final String error;
 
   CalculationResponse(
-    this.result,
+    this.calcResult,
+    this.costDelivery,
+    this.message,
     this.error,
   );
 
   CalculationResponse.fromJSON(Map<String, dynamic> json)
-    : result = json['result'],
+    : calcResult = json['calc']['calc_result'],
+      costDelivery = json['calc']['cost_delivery'],
+      message = json['calc']['message'],
       error = null;
 
   CalculationResponse.withError(String error)
-    : result = null,
+    : calcResult = null,
+      costDelivery = null,
+      message = null,
       error = error;
 
   CalculationResponse.init()
-    : result = null,
+    : calcResult = null,
+      costDelivery = null,
+      message = null,
       error = null;
 
   CalculationResponse.loading()
-    : result = -1,
+    : calcResult = -1,
+      costDelivery = null,
+      message = null,
       error = null;
 }
