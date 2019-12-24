@@ -2,4 +2,4 @@
 
 (developed on flutter.io using BLoC/Rx pattern)
 
-![img](s1.gif)
+![img](s2.gif)
