@@ -18,17 +18,19 @@ class OptionsBtn extends StatelessWidget{
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: Ink(
         decoration: BoxDecoration(
-          border: Border.all(color: AppColor.green, width: 2.0),
-          borderRadius: BorderRadius.circular(45.0),
-          color: color
+          borderRadius: BorderRadius.circular(25.0),
+          color: color,
+          boxShadow: [
+            BoxShadow(offset: Offset(2.0, 4.0), blurRadius: 6.0, color: AppColor.shadow)
+          ]
         ),
         child: Padding(
           padding: EdgeInsets.all(8.0),
           child: Text(
             caption,
-            style: color == Colors.transparent ? AppTextStyle.options : AppTextStyle.optionsWhite
+            style: color == Colors.white ? AppTextStyle.options : AppTextStyle.optionsWhite
           ),
         ),
       ),

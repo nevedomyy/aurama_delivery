@@ -76,7 +76,7 @@ class _AddressSearchPageState extends State<AddressSearchPage> {
               child: TextField(
                 controller: _controller,
                 autofocus: true,
-                cursorColor: AppColor.green,
+                cursorColor: AppColor.greenDark,
                 style: AppTextStyle.textBig,
                 decoration: InputDecoration.collapsed(
                   hintText: 'Адрес',

@@ -30,7 +30,7 @@ class _AppTextFieldLabelState extends State<AppTextFieldLabel> {
     return TextField(
       controller: controller,
       keyboardType: inputType,
-      cursorColor: AppColor.green,
+      cursorColor: AppColor.greenDark,
       style: AppTextStyle.text,
       decoration: InputDecoration(
         labelText: labelText,

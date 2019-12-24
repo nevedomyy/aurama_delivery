@@ -18,7 +18,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin{
   final List<String> _menuItems = ['ПОМОЩЬ', 'КАБИНЕТ', 'ЧАТ', 'ЗАКАЗЫ', 'НОВЫЙ'];
   AnimationController _animationController;  
   Animation _animation;
-  int _pageNumber = 6;
+  int _pageNumber = 4;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin{
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Material(
-      color: Colors.white,
+      color: AppColor.background,
       child: Row(
               children: <Widget>[
                 Container(
@@ -57,23 +57,13 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin{
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.end,
-                          children: List.generate(7, (i){
-                            if(i==0) return SafeArea(
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 6.0),
-                                child: Text(
-                                  'К',
-                                  style: AppTextStyle.intro1White,
-                                ),
-                              ),
-                            ); 
-                            if(i==1) return Spacer();
+                          children: List.generate(5, (i){
                             return MenuBtn(
                               onTap: (){
                                 _pageNumber = i;
                                 setState((){});
                               },
-                              caption: _menuItems[i-2],
+                              caption: _menuItems[i],
                               color: _pageNumber == i ? AppColor.blue : Colors.white
                             );
                           })
@@ -85,7 +75,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin{
                   child: _animationController.isCompleted
                     ? SafeArea(
                         child: IndexedStack(
-                          index: _pageNumber-2,
+                          index: _pageNumber,
                           children: <Widget>[
                             HelpPage(),
                             ProfilePage(),

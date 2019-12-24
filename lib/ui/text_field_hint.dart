@@ -32,7 +32,7 @@ class _AppTextFieldHintState extends State<AppTextFieldHint> {
       child: TextField(
         controller: controller,
         keyboardType: inputType,
-        cursorColor: AppColor.green,
+        cursorColor: AppColor.greenDark,
         style: AppTextStyle.text,
         decoration: InputDecoration.collapsed(
           hintText: hintText,
