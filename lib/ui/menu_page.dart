@@ -25,12 +25,15 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin{
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 350)
+      duration: Duration(milliseconds: 400)
     )..addListener((){setState(() {});});
     _animation = Tween(
       begin: 0.0,
       end: 1.0
-    ).animate(_animationController);
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.fastOutSlowIn
+    ));
   }
 
   @override
